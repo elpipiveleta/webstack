@@ -3,47 +3,39 @@
 ###########
 
 INSTALL_DIR=/usr/local/webstack
-
-# http://www.coderanch.com/t/497589/Linux-UNIX/parent-dir-shell
-BUILD_DIR=${PWD%/*}/build
+BUILD_DIR=${PWD%/*}/build # http://www.coderanch.com/t/497589/Linux-UNIX/parent-dir-shell
 SOURCE_DIR=${PWD%/*}/sources
+LIBPHP=$INSTALL_DIR/${APACHE}/modules/libphp5.so
 
 ###################
 # SOFTWARE VERSIONS
 ###################
 
 # http://cronolog.org/
-#
-CRONOLOG=$(cd ${SOURCE_DIR} && ls -r cronolog-*  | head -1)
-echo $CRONOLOG
+#CRONOLOG=$(cd ${SOURCE_DIR} && ls -r cronolog-*  | head -1)
+#CRONOLOG_DIR=$()
 
 # http://www.openssl.org/
-#
 OPENSSL=$(cd ${SOURCE_DIR} && ls -r openssl-*  | head -1)
-echo $OPENSSL
+OPENSSL_DIR=$(echo ${OPENSSL} | sed 's/.tar.gz//g')
 
 # http://httpd.apache.org/
-#
 APACHE=$(cd ${SOURCE_DIR} && ls -r httpd-*.gz$*  | head -1)
-echo $APACHE
+APACHE_DIR=$(echo ${APACHE} | sed 's/.tar.gz//g')
 
 #CCLIENT=c-client
 # http://www.washington.edu/imap/
-IMAP=$(cd ${SOURCE_DIR} && ls -r c-client.tar.Z | head -1)
-echo $IMAP
+#IMAP=$(cd ${SOURCE_DIR} && ls -r c-client.tar.Z | head -1)
+#echo $IMAP
 
 # http://www.zlib.net/
-#
-ZLIB=$(cd ${SOURCE_DIR} && ls -r zlib-*  | head -1)
-echo $ZLIB
+#ZLIB=$(cd ${SOURCE_DIR} && ls -r zlib-*  | head -1)
+#echo $ZLIB
 
 # http://php.net/
-#
-#PHP=php-5.3.2
 PHP=$(cd ${SOURCE_DIR} && ls -r php-*  | head -1)
-echo $PHP
+PHP_DIR=$(echo ${PHP} | sed 's/.tar.gz//g')
 
-LIBPHP=$INSTALL_DIR/${APACHE}/modules/libphp5.so
 
 
 #MYSQL_CLI_RHEL=MySQL-client-standard-5.0.27-0.rhel3.i386.rpm
