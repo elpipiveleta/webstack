@@ -17,8 +17,11 @@
 # INCLUDES
 ##########
 
+# FAILS
 #. ../libs/common.sh
 
-#. ../libs/3_openssl.sh
-#. ../libs/4_httpd.sh
-. ../libs/5_php5.sh
+# FAILS when compiling apache
+. ../libs/3_openssl.sh
+
+. ../libs/4_httpd.sh
+#. ../libs/5_php5.sh
