@@ -1,14 +1,13 @@
 #!/bin/bash
 
-
 # check httpd's dependencies
 
 # OPENSSL
-if [ ! -d ${INSTALL_DIR}/openssl ]; then
-  echo "OpenSSL IS NOT installed!"
-  echo "Please run build_openssl.sh"
-  exit
-fi
+#if [ ! -d ${INSTALL_DIR}/${OPENSSL_DIR} ]; then
+#  echo "OpenSSL IS NOT installed!"
+#  echo "Please build openssl"
+#  exit
+#fi
 
 # CRONOLOG
 #if [ ! -d ${INSTALL_DIR}/${CRONOLOG} ]; then
@@ -17,12 +16,10 @@ fi
 #  exit
 #fi
 
-
 if [ ! -f $SOURCE_DIR/${APACHE} ]; then 
   echo "$SOURCE_DIR/${APACHE} is not present, fix it and run again"
   exit
 fi
-
 
 [ -d $BUILD_DIR ] || mkdir $BUILD_DIR
 rm -fr $BUILD_DIR/httpd*
@@ -34,29 +31,29 @@ pwd ; ls
 
 echo "Installing HTTPD"
 
-# NOT USED IN ORDER TO HAVE MULTIPLE HTTPD VERSION RUNNING W/ DIFF CONFIG
-#	--sysconfdir=/etc/httpd/conf \  
-#  --enable-ldap \
-
 export LDFLAGS='-L/sw/bin/glibtool'
 
 ./configure \
-  --prefix=${INSTALL_DIR}/httpd  \
+  --prefix=${INSTALL_DIR}/${APACHE_DIR}  \
   --enable-info \
   --enable-rewrite \
   --enable-proxy \
   --enable-proxy-http \
   --enable-ssl \
   --enable-so \
-  --with-layout=Apache \
-  -enable-ssl \
+  --with-layout=Apache \ 
+  --enable-ssl \
 
-# 
-#  --with-ssl=${INSTALL_DIR}/openssl 
+# FAILS
+--with-ssl=${INSTALL_DIR}/${OPENSSL_DIR} 
 
+# NOT USED IN ORDER TO HAVE MULTIPLE HTTPD VERSION RUNNING W/ DIFF CONFIG
+#	--sysconfdir=/etc/httpd/conf \  
+
+#  --enable-ldap \
 
 make
 make install
 
 cd ..
-#rm -fr $COMPILE_DIR/${APACHE}
+rm -fr $COMPILE_DIR/${APACHE_DIR}

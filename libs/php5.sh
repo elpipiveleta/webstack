@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # check php's dependencies
 #if [ ! -f ${INSTALL_DIR:0:10}/lib/libc-client.a ]; then
 #  echo "IMAP C Client IS NOT installed!"
@@ -8,12 +7,10 @@
 #  exit
 #fi
 
-
 if [ ! -f $SOURCE_DIR/$PHP ]; then 
   echo "$SOURCE_DIR/${PHP} is not present, fix it and run again"
   exit
 fi
-
 
 [ -d $BUILD_DIR ] || mkdir $BUILD_DIR
 rm -fr $BUILD_DIR/php*
@@ -44,7 +41,6 @@ fi
 #	GD from custom install
 #     --with-gd=/usr/local/gd-2.0.33 \
 
-
 ./configure  \
   --prefix=${INSTALL_DIR}/${PHP} \
   --with-apxs2=${INSTALL_DIR}/${APACHE}/bin/apxs \
@@ -53,7 +49,10 @@ fi
   --with-pear \
   --with-zip=/usr \
   --with-zlib=/usr \
-  --with-libxml-dir=/usr/lib/ \
+# linux
+#  --with-libxml-dir=/usr/lib/ \
+# mac
+  --with-libxml-dir=/sw/lib \
   --with-xml \
   --with-mysql=/usr/ \
   --with-regex=system \
@@ -72,6 +71,8 @@ fi
   --enable-debug=no \
   --enable-xslt \
 #  --with-gd=/usr \
+# symfony2 requirement
+--enable-intl \
 
 make
 make install
@@ -86,3 +87,13 @@ rm -fr $COMPILE_DIR/${PHP}
 #--with-zip=/usr
 #--with-xml
 #Check './configure --help' for available options
+
+echo "Add this to httpd.conf:"
+echo "
+# PHP is an HTML-embedded scripting language which attempts to make it
+LoadModule php5_module modules/libphp5.so
+
+# Cause the PHP interpreter to handle files with a .php extension.
+AddHandler php5-script .php
+AddType text/html .php
+"
