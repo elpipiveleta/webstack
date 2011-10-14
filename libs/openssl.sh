@@ -32,6 +32,6 @@ echo    "* OpenSSL was installed @ ${INSTALL_DIR}/${OPENSSL_DIR}"
 echo -n "* Version:" && ${INSTALL_DIR}/${OPENSSL_DIR}/bin/openssl version 
 
 cd ..
-rm -fr   $BUILD_DIR/${OPENSSL_DIR}
+rm -fr   $BUILD_DIR/${OPENSSL_DIR}*
 
 

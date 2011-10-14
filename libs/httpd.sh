@@ -31,7 +31,7 @@ pwd ; ls
 
 echo "Installing HTTPD"
 
-export LDFLAGS='-L/sw/bin/glibtool'
+#export LDFLAGS='-L/sw/bin/glibtool'
 
 ./configure \
   --prefix=${INSTALL_DIR}/${APACHE_DIR}  \
@@ -56,4 +56,4 @@ make
 make install
 
 cd ..
-rm -fr $COMPILE_DIR/${APACHE_DIR}
+rm -fr $COMPILE_DIR/${APACHE_DIR}*

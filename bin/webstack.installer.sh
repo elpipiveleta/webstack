@@ -21,7 +21,15 @@
 #. ../libs/common.sh
 
 # FAILS when compiling apache
-. ../libs/3_openssl.sh
+#. ../libs/openssl.sh
+#. ../libs/httpd.sh
+#. ../libs/mcrypt.sh
+#. ../libs/libjpeg.sh
+#. ../libs/libpng.sh
 
-. ../libs/4_httpd.sh
-#. ../libs/5_php5.sh
+#. ../libs/libiconv.sh
+#. ../libs/libxslt.sh
+#. ../libs/libxml2.sh
+
+
+. ../libs/php5.sh

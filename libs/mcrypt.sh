@@ -1,37 +1,49 @@
 #!/bin/bash
 
-if [ -d ${INSTALL_DIR}/${OPENSSL_DIR} ]; then 
-  echo "* ${INSTALL_DIR}/${OPENSSL_DIR} is already there. Do you want to re-install it ? (Y/N) "
+# http://www.kevinkorb.com/post/24 - Step 6 - Install Mcrypt dependencies
+
+if [ -d ${INSTALL_DIR}/${MCRYPT_DIR} ]; then 
+  echo "* ${INSTALL_DIR}/${MCRYPT_DIR} is already there. Do you want to re-install it ? (Y/N) "
   read OPTION
   if [ "$OPTION" == "Y" ] ; then
-	cp -r ${INSTALL_DIR}/${OPENSSL_DIR} ${INSTALL_DIR}/${OPENSSL_DIR}.pre.reinstall
+	cp -r ${INSTALL_DIR}/${MCRYPT_DIR} ${INSTALL_DIR}/${MCRYPT_DIR}.pre.reinstall
   fi
 #  exit
 fi
 
-if [ ! -f $SOURCE_DIR/${OPENSSL} ]; then 
-  echo "$SOURCE_DIR/${OPENSSL} is not present, fix it and run again"
+if [ ! -f $SOURCE_DIR/${MCRYPT} ]; then 
+  echo "$SOURCE_DIR/${MCRYPT} is not present, fix it and run again"
   exit
 fi
 
 [ -d $BUILD_DIR ] || mkdir $BUILD_DIR
-rm -fr $BUILD_DIR/${OPENSSL_DIR}
-cp $SOURCE_DIR/${OPENSSL} $BUILD_DIR
+rm -fr $BUILD_DIR/${MCRYPT_DIR}
+cp $SOURCE_DIR/${MCRYPT} $BUILD_DIR
 cd $BUILD_DIR
-tar xfz  ${OPENSSL}
-cd $BUILD_DIR/${OPENSSL_DIR}
+tar xfz  ${MCRYPT}
+cd $BUILD_DIR/${MCRYPT_DIR}
 
-echo Installing ${OPENSSL_DIR}:
+echo Installing ${MCRYPT_DIR}:
 
-./config --prefix=${INSTALL_DIR}/${OPENSSL_DIR}
+./configure --prefix=${INSTALL_DIR}/${MCRYPT_DIR} \
+  --disable-posix-threads \
+  --enable-dynamic-loading \
 
-make 
-sudo make install
-
-echo    "* OpenSSL was installed @ ${INSTALL_DIR}/${OPENSSL_DIR}"
-echo -n "* Version:" && ${INSTALL_DIR}/${OPENSSL_DIR}/bin/openssl version 
+make
+make install
 
 cd ..
-rm -fr   $BUILD_DIR/${OPENSSL_DIR}
+rm -fr   $BUILD_DIR/${MCRYPT_DIR}*
 
 
+exit
+
+Libraries have been installed in:
+   /usr/local/webstack/libmcrypt-2.5.8/lib
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `DYLD_LIBRARY_PATH' environment variable
+     during execution
